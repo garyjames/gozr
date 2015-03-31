@@ -51,40 +51,5 @@ def connect(server=None):
 
     connection_string = ('DRIVER={driver}; SERVER={server}; UID={username}; PWD={password}')
 
-    db_params['wt-woman'] = {
-        'driver': '{SQL Server}',
-        'server': 'wt-woman',
-        'username': 'wexreports',
-        'password': 'R3p0rtl+'
-    }
-
-    db_params['wxsec-dbmarley'] = {
-        'driver': '{SQL Server}',
-        'server': 'wxsec-dbmarley',
-        'username': 'wexreports',
-        'password': 'R3p0rtl+'
-    }
-
-    db_params[r'wtdb5\dev5'] = {
-        'driver': '{SQL Server}',
-        'server': r'WTDB5\DEV5',
-        'username': 'Mod6',
-        'password': 'Mod6'
-    }
-
-    db_params[r'wt-chsql1'] = {
-        'driver': '{SQL Server}',
-        'server': r'wt-chsql1',
-        'username': 'wexreports',
-        'password': 'R3p0rtl+'
-    }
-
-    db_params['dbtest'] = {
-        'driver': '{SQL Server}',
-        'server': 'wt-dbtest',
-        'username': 'wexreports',
-        'password': 'R3p0rtl+'
-    }
-
     if server:
         return pyodbc.connect(connection_string.format(**db_params[server]))
