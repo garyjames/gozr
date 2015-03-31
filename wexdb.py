@@ -4,14 +4,17 @@
 import pyodbc
 from collections import namedtuple
 
-class Wexdb(object):
-    def __init__(self, dbServerName):
-        cnxn = connect(dbServerName)
-        self.cursor = cnxn.cursor()
+class WexDB(object):
+    def __init__(self, dsn='', user='', password='', host='', database=''):
+        self._cnxn = pyodbc.connect(dsn, user, password, host, database)
+        self._cursor = self._cnxn.cursor()
+
+    def __del__(self):
+        self._cnxn.close()
 
     @property
     def databases(self):
-        return self.query("select name from master..sysdatabases")
+        return self._cursor.query("select name from master..sysdatabases")
 
     @property
     def db(self):
@@ -37,6 +40,9 @@ class Wexdb(object):
             return ( named_row._make(i) for i in records )
         elif query:
             return records
+
+    def query(self, query, params):
+        return self._cursor.execute(query, params)
 
 
 def connect(server=None):
