@@ -7,7 +7,6 @@ from collections import namedtuple
 import mydsn as dsn
 
 class MyDB(object):
-
     """more info at https://www.python.org/dev/peps/pep-0249"""
 
     apilevel = '2.0'
