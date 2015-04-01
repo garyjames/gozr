@@ -13,13 +13,10 @@ class MyDB(object):
     threadsafety = 1
     paramstyle = 'pyformat'
 
+    _tmps = 'Driver={{{driver}}};Server={server};Database={database};Uid={uid};Pwd={pwd}'
+
     def __init__(self, db_alias):
-        t = ('Driver={{{driver}}};'
-             'Server={server};'
-             'Database={database};'
-             'Uid={uid};'
-             'Pwd={pwd}')
-        self._dsn = t.format(**dsn.dsn(db_alias))
+        self._dsn = _tmps.format(**dsn.dsn(db_alias))
         self._cnxn = pyodbc.connect(self._dsn)
         self._cursor = self._cnxn.cursor()
 
@@ -34,20 +31,12 @@ class MyDB(object):
         return self._cursor.execute("select name from master..sysdatabases")
 
     @property
-    def db(self):
-        return self.__db
+    def tables(self):
+        if self._db:
+            return self.query(
+                "select table_name from %(db)s.information_schema.tables " +
+                "where table_type = 'BASE TABLE'", db=self._db)
 
-#    @db.setter
-#    def db(self, db):
-#        self.__db = db
-#
-#    @property
-#    def tables(self):
-#        if self.__db:
-#            return self.query(
-#                "select table_name from %()s.information_schema.tables " +
-#                "where table_type = 'BASE TABLE'", _foo_is_missing)
-#
 #    def query(self, query=None, ret_as_tuple=True):
 #        """return either a cursor or a generator which yields named tuples"""
 #        records = self.cursor.execute(query)
@@ -57,12 +46,3 @@ class MyDB(object):
 #            return ( named_row._make(i) for i in records )
 #        elif query:
 #            return records
-
-#def connect(server=None):
-#
-#    db_params = dict()
-#
-#    connection_string = ('DRIVER={driver}; SERVER={server}; UID={username}; PWD={password}')
-#
-#    if server:
-#        return pyodbc.connect(connection_string.format(**db_params[server]))
