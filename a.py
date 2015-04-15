@@ -1,5 +1,7 @@
 # a.py
 
+"""simple pandas example"""
+
 import pandas as pd
 import numpy as np
 
