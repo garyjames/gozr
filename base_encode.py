@@ -12,11 +12,12 @@ def encode32(n, b32=str(), exp=0):
     if n < 32:
         return map32[n] + b32
     else:
-        return intTo32(n/32, b32=map32[n%32]+b32, exp=exp+1)
+        return encode32(n/32, b32=map32[n%32]+b32, exp=exp+1)
 
 def decode32(s):
     result = 0
     exp = len(s)
+    
     pass
 
 if __name__ == '__main__':
