@@ -31,5 +31,6 @@ def get_size(start_path='/home/'):
     return counter, getsize_error
 	        
 if __name__ == '__main__':
-    print get_size()
-    print len(get_size())
+    ret = get_size()
+    print ret
+    print len(ret)
