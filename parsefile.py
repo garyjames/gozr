@@ -2,7 +2,10 @@ import logging
 from sys import argv 
 from os import path 
 
-logdir = "C:/logs"
+if 'Windows' in os.uname():
+    logdir = os.path.join('C:\\', 'logs')
+else:
+    logdir = os.path.join('/logs')
 
 def wraplogging(f):
     logging.basicConfig(
