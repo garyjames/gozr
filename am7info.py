@@ -2,7 +2,7 @@ import os
 import sys
 from bs4 import BeautifulSoup as bs
 
-def myfunc():
+def uses_python():
 
     for filename in os.listdir(os.curdir):
         if filename.endswith('.aml'):
@@ -24,4 +24,4 @@ def myfunc():
                     fh.write(soup.prettify())
 
 if __name__ == "__main__":
-    myfunc()
+    uses_python()
