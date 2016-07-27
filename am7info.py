@@ -24,4 +24,5 @@ def uses_python():
                     fh.write(soup.prettify())
 
 if __name__ == "__main__":
+
     uses_python()
