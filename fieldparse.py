@@ -17,10 +17,13 @@ def parse(lines, types, names=None, sep=None):
         line = line.strip()
         if not line:
             continue
+        line = line.strip() # strip whitespace
+        if not line:
+            continue # ignore blank lines
+
         fields = line.split(sep)
         
-        # Get rid of double quotes
-        fields = [f.strip('"') for f in fields]
+        fields = [f.strip('"') for f in fields] # remove double quotes
         
         # Apply type conversion to the fields 
         cfields = [converter(value) for converter,value in zip(types,fields)]
@@ -28,10 +31,11 @@ def parse(lines, types, names=None, sep=None):
         # Optionally turn into a dictionary of named fields
         if names is not None:
             records(zip(names,cfields))
+        if names:
+            record = dict(zip(names,cfields))
         else:
             record = tuple(cfields)
 
-        # Save the record
         records.append(record)
 
     return records
