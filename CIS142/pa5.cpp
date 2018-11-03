@@ -78,65 +78,50 @@ void printMainMenu()
 The function printIntroMenu() displays the following:
 
 	Please select an option from the menu below:
-
-l 	-> Login
-c -> Create New Account
-       q -> Quit
-
-       >
-
+    l -> Login
+    c -> Create New Account
+    q -> Quit
 
 The function printMainMenu() displays the following menu:
 
-d 	-> Deposit Money
-w 	-> Withdraw Money
-r 	-> Request Balance
-q 	-> Quit
-
-       >
-
+    d -> Deposit Money
+    w -> Withdraw Money
+    r -> Request Balance
+    q -> Quit
 
 The function start() does the following:
 
-1) Displays the following message, “Please select an option from the menu below: ”
-
-2) Displays the introduction menu. Do this by calling the function you created earlier, printIntroMenu()
-
-3) Program halts and waits for the user to make their selection. Use the cin >> function to accomplish this step.
-
-4) Now use a switch statement to do the following:
-If the user types the character ‘l’ then the function login() is called
-If the user types the character ‘c’ then the function createAccount() is called.
-If the user types ‘q’ your program will terminate by calling the function exit(0)
+    1) Displays the following message, “Please select an option from the menu below: ”
+    2) Displays the introduction menu. Do this by calling the function you created earlier, printIntroMenu()
+    3) Program halts and waits for the user to make their selection. Use the cin >> function to accomplish this step.
+    4) Now use a switch statement to do the following:
+        If the user types the character ‘l’ then the function login() is called
+        If the user types the character ‘c’ then the function createAccount() is called.
+        If the user types ‘q’ your program will terminate by calling the function exit(0)
 
 */
 
 #include <iostream>
-#include <cstdlib>
+#include <cctype>
 
 using namespace std;
 
 char menuInput;
-
 char user_id_input[32];
 char user_pw_input[32];
 char user_id[32];
 char user_pw[32];
 
 void printIntroMenu();
+void start();
 
 int main()
 {
-    printIntroMenu();
-
-    // menuInput contains 1st choice
-    switch (menuInput)
-
+    start();
 }
 
 void printIntroMenu()
 {
-    // WRITE CODE HERE
     cout << "(L) -> Login\n";
     cout << "(C) -> Create New Account\n";
     cout << "(Q) -> Quit\n\n";
@@ -149,11 +134,35 @@ void printMainMenu()
     cout << "(W) -> Withdraw Money\n";
     cout << "(R) -> Request Balance\n";
     cout << "(Q) -> Quit\n";
-
 }
 
 void start()
 {
     cout << "Welcome to the Cold Hard Cash ATM !!\n\n";
     cout << "Please select an option from the menu below\n\n";
+    cin >> menuInput;
+    menuInput = toupper(menuInput); // ensure it is in upper case
+
+    switch (menuInput)
+    {
+        case 'L':
+            login();
+            break;
+        case 'C':
+            createAccount();
+            break;
+        case 'Q':
+            cout << "Quit!!!!!!!!!!!";
+            break;
+    }
+}
+
+void login()
+{
+
+}
+
+void createAccount()
+{
+
 }
