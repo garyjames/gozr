@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1540062508 source:d:\cis142\pa3\main.cpp
+	<iostream>
+	<iomanip>
+

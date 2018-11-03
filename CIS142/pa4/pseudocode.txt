@@ -1,0 +1,17 @@
+/*
+
+prompt user for number of conversions
+get number of conversions
+
+for number of conversions
+    prompt user for a temperature
+    get temperature (positive or negative float)
+    prompt user for conversion type
+    get conversion type (one character either F or C)
+    apply correct formula
+        case conversion
+            F(user_temp)
+            C(user_temp)
+    print results
+
+*/
