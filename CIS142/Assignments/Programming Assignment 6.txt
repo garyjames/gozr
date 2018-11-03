@@ -1,4 +1,4 @@
-﻿Programming Assignment 6
+Programming Assignment 6
 
 Check Even or Odd in C++
 To check whether the input number is an even or an odd number in C++ programming, you have to ask to the user to enter a number.

@@ -1,4 +1,4 @@
-﻿Programming assignment 4 (Function)
+Programming assignment 4 (Function)
 
 "Celsius and Fahrenheit temperature converter."
 

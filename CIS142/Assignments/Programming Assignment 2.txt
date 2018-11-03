@@ -1,4 +1,4 @@
-﻿Programming  Assignment 2
+Programming  Assignment 2
 
 Write a program that converts a given number of minutes into hours:minutes:seconds format. 
 For example, if the user entered 102.33 minutes we would get:
