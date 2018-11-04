@@ -2,167 +2,218 @@
 
 Gary Galvez
 CIS 142
-Programming Assignment 5
+Programming Assignment 5 - ATM Machine
 
-ATM Machine Phase 1
+A program that allows a user to do the following:
 
-In this assignment you will create a program that allows a user to do the following:
-
-1) Create a bank account by supplying a user id and password.
-2) Login using their id and password.
-3) Quit the program.
+    1) Create a bank account by supplying a user id and password.
+    2) Login using their id and password.
+    3) Quit the program.
 
 Now if login was successful the user will be able to do the following:
 
-1) Withdraw money.
-2) Deposit money.
-3) Request balance.
-4) Quit the program.
+    1) Withdraw money.
+    2) Deposit money.
+    3) Request balance.
+    4) Quit the program.
 
-If login was not successful (for example the id or password did not match) then the user will be taken back to the introduction menu.
-
-// CODE STARTS HERE
-
-       #include <iostream.h>
-       #include <stdlib.h>
-
-	// function prototypes
-       void printIntroMenu();
-       void printMainMenu();
-       void start();
-       void login();
-       void createAccount();
-
-       // global variable (use this variable to store the user’s menu selection)
-       char menuInput;
-
-       // the main function
-       int main()
-       {
-       	// TO WRITE A WELCOME MESSAGE HERE
-
-		// call the function start
-		start();
-
-		return 0;
-       }
-
-void printIntroMenu()
-       {
-       	// WRITE CODE HERE
-       }
-
-void printMainMenu()
-       {
-       	// WRITE CODE HERE
-       }
-
-       void start()
-       {
-       	// EXPLANATION OF CODE THAT GOES HERE IS BELOW
-       }
-
-       void createAccount()
-       {
-       	// PHASE 2
-       }
-
-       void login()
-       {
-       	// PHASE 2
-       }
-
-// CODE ENDS HERE
-
-
-The function printIntroMenu() displays the following:
-
-	Please select an option from the menu below:
-    l -> Login
-    c -> Create New Account
-    q -> Quit
-
-The function printMainMenu() displays the following menu:
-
-    d -> Deposit Money
-    w -> Withdraw Money
-    r -> Request Balance
-    q -> Quit
-
-The function start() does the following:
-
-    1) Displays the following message, “Please select an option from the menu below: ”
-    2) Displays the introduction menu. Do this by calling the function you created earlier, printIntroMenu()
-    3) Program halts and waits for the user to make their selection. Use the cin >> function to accomplish this step.
-    4) Now use a switch statement to do the following:
-        If the user types the character ‘l’ then the function login() is called
-        If the user types the character ‘c’ then the function createAccount() is called.
-        If the user types ‘q’ your program will terminate by calling the function exit(0)
+If login was not successful (for example the id or password did not match) then
+the user will be taken back to the introduction menu.
 
 */
 
 #include <iostream>
-#include <cctype>
 
 using namespace std;
 
-char menuInput;
-char user_id_input[32];
-char user_pw_input[32];
+// vars
+int authenticated = 0;
+float balance = 0;
+float user_input = 0;
+char selection = '0';
+char user_input_id[32];
+char user_input_pw[32];
 char user_id[32];
 char user_pw[32];
 
-void printIntroMenu();
+// main function
 void start();
+
+// menu_intro and menu_main
+// act as callers for all relevant "helper" functions
+void menu_intro();
+void menu_main();
+
+// helper functions
+void login();
+void get_selection();
+void create_account();
+void print_menu_intro();
+void print_menu_main();
+void implement_intro_selection();
+void implement_main_selection();
+void withdraw();
+void deposit();
+void print_balance();
+
+
+
 
 int main()
 {
     start();
 }
 
-void printIntroMenu()
-{
-    cout << "(L) -> Login\n";
-    cout << "(C) -> Create New Account\n";
-    cout << "(Q) -> Quit\n\n";
-
-}
-
-void printMainMenu()
-{
-    cout << "(D) -> Deposit Money\n";
-    cout << "(W) -> Withdraw Money\n";
-    cout << "(R) -> Request Balance\n";
-    cout << "(Q) -> Quit\n";
-}
-
 void start()
 {
     cout << "Welcome to the Cold Hard Cash ATM !!\n\n";
-    cout << "Please select an option from the menu below\n\n";
-    cin >> menuInput;
-    menuInput = toupper(menuInput); // ensure it is in upper case
 
-    switch (menuInput)
+    // Loop until user selects 'Q' to Quit
+    while (1)
+    {
+        if ( !authenticated )
+        {
+            menu_intro();
+        }
+        else
+        {
+            menu_main();
+        }
+    }
+}
+
+void menu_intro()
+{
+    print_menu_intro();
+    get_selection();
+    implement_intro_selection();
+}
+
+void menu_main()
+{
+    print_menu_main();
+    get_selection();
+    implement_main_selection();
+}
+
+void print_menu_intro()
+{
+    cout << "\n\nSelect an option from menu below\n\n";
+    cout << "(L) -> Login\n";
+    cout << "(C) -> Create New Account\n";
+    cout << "(Q) -> Quit\n\n";
+}
+
+void print_menu_main()
+{
+    cout << "\n\nSelect an option from menu below\n\n";
+    cout << "(D) -> Deposit Money\n";
+    cout << "(W) -> Withdraw Money\n";
+    cout << "(R) -> Request Balance\n";
+    cout << "(Q) -> Quit\n\n";
+}
+
+void get_selection()
+{
+    cin >> selection;
+    selection = toupper(selection);  // force upper case for switch
+}
+
+void implement_intro_selection()
+{
+    switch (selection)
     {
         case 'L':
             login();
             break;
         case 'C':
-            createAccount();
+            create_account();
             break;
         case 'Q':
-            cout << "Quit!!!!!!!!!!!";
-            break;
+            exit(0);
     }
+}
+
+void implement_main_selection()
+{
+    switch (selection)
+    {
+        case 'D':
+            deposit();
+            break;
+        case 'W':
+            withdraw();
+            break;
+        case 'R':
+            print_balance();
+            break;
+        case 'Q':
+            exit(0);
+    }
+}
+
+void create_account()
+{
+    cout << "Please enter your user name: ";
+    cin >> user_id;
+
+    cout << "Please enter your password: ";
+    cin >> user_pw;
 }
 
 void login()
 {
+    int failed = 0;
 
+    cout << "Please login below\n\n";
+    cout << "login: ";
+    cin >> user_input_id;
+    cout << "password: ";
+    cin >> user_input_pw;
+
+    for (int i=0; i < sizeof user_input_id; i++)
+    {
+        if (user_input_id[i] != user_id[i])
+        {
+            failed = 1;
+        }
+        if (user_input_pw[i] != user_pw[i])
+        {
+            failed = 1;
+        }
+    }
+    if (failed)
+    {
+        cout << "\n\n******** LOGIN FAILED! ********\n\n" << endl;
+    }
+    else
+    {
+        authenticated = 1;
+    }
 }
 
-void createAccount()
+void print_balance()
 {
+    cout << "Your balance is $" << balance << endl;
+}
 
+void deposit()
+{
+    cout << "Amount of deposit: $";
+    cin >> user_input;
+    balance += user_input;
+}
+
+void withdraw()
+{
+    cout << "Amount of withdrawl: $";
+    cin >> user_input;
+    if (balance >= user_input)
+    {
+        balance -= user_input;
+    }
+    else
+    {
+        cout << "Not enough funds, nice try.";
+    }
 }
