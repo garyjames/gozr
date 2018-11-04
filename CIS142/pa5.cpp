@@ -59,53 +59,44 @@ void print_balance();
 
 
 
-int main()
-{
+int main() {
     start();
 }
 
-void start()
-{
+void start() {
     cout << "Welcome to the Cold Hard Cash ATM !!\n\n";
 
     // Loop until user selects 'Q' to Quit
-    while (1)
-    {
-        if ( !authenticated )
-        {
+    while (1) {
+        if ( !authenticated ) {
             menu_intro();
         }
-        else
-        {
+        else {
             menu_main();
         }
     }
 }
 
-void menu_intro()
-{
+void menu_intro() {
     print_menu_intro();
     get_selection();
     implement_intro_selection();
 }
 
-void menu_main()
-{
+void menu_main() {
     print_menu_main();
     get_selection();
     implement_main_selection();
 }
 
-void print_menu_intro()
-{
+void print_menu_intro() {
     cout << "\n\nSelect an option from menu below\n\n";
     cout << "(L) -> Login\n";
     cout << "(C) -> Create New Account\n";
     cout << "(Q) -> Quit\n\n";
 }
 
-void print_menu_main()
-{
+void print_menu_main() {
     cout << "\n\nSelect an option from menu below\n\n";
     cout << "(D) -> Deposit Money\n";
     cout << "(W) -> Withdraw Money\n";
@@ -113,16 +104,13 @@ void print_menu_main()
     cout << "(Q) -> Quit\n\n";
 }
 
-void get_selection()
-{
+void get_selection() {
     cin >> selection;
     selection = toupper(selection);  // force upper case for switch
 }
 
-void implement_intro_selection()
-{
-    switch (selection)
-    {
+void implement_intro_selection() {
+    switch (selection) {
         case 'L':
             login();
             break;
@@ -134,10 +122,8 @@ void implement_intro_selection()
     }
 }
 
-void implement_main_selection()
-{
-    switch (selection)
-    {
+void implement_main_selection() {
+    switch (selection) {
         case 'D':
             deposit();
             break;
@@ -152,17 +138,14 @@ void implement_main_selection()
     }
 }
 
-void create_account()
-{
+void create_account() {
     cout << "Please enter your user name: ";
     cin >> user_id;
-
     cout << "Please enter your password: ";
     cin >> user_pw;
 }
 
-void login()
-{
+void login() {
     int failed = 0;
 
     cout << "Please login below\n\n";
@@ -171,49 +154,36 @@ void login()
     cout << "password: ";
     cin >> user_input_pw;
 
-    for (int i=0; i < sizeof user_input_id; i++)
-    {
-        if (user_input_id[i] != user_id[i])
-        {
-            failed = 1;
-        }
-        if (user_input_pw[i] != user_pw[i])
-        {
+    for (int i=0; i < sizeof user_input_id; i++) {
+        if (user_input_id[i] != user_id[i] || user_input_pw[i] != user_pw[i]) {
             failed = 1;
         }
     }
-    if (failed)
-    {
+    if (failed) {
         cout << "\n\n******** LOGIN FAILED! ********\n\n" << endl;
     }
-    else
-    {
+    else {
         authenticated = 1;
     }
 }
 
-void print_balance()
-{
+void print_balance() {
     cout << "Your balance is $" << balance << endl;
 }
 
-void deposit()
-{
+void deposit() {
     cout << "Amount of deposit: $";
     cin >> user_input;
     balance += user_input;
 }
 
-void withdraw()
-{
+void withdraw() {
     cout << "Amount of withdrawl: $";
     cin >> user_input;
-    if (balance >= user_input)
-    {
+    if (balance >= user_input) {
         balance -= user_input;
     }
-    else
-    {
+    else {
         cout << "Not enough funds, nice try.";
     }
 }
