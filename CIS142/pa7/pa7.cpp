@@ -17,7 +17,7 @@ Check Prime or Not in C++
 
 using namespace std;
 int user_number;
-int factor_count = 0; // count how many factors n=user_number has
+int factor_count = 0; // keep count of user_number factors
 
 int main() {
 
@@ -34,7 +34,15 @@ int main() {
             factor_count++;
         }
     }
-    cout << "Your number " << user_number << " has " << factor_count << " factors.\n" << endl;
+    cout << "Your number " << user_number << " has "
+         << factor_count << " factors.\n" << endl;
+         
+    if (factor_count > 2) {
+        cout << "\n" << user_number << " is NOT prime.\n" << endl;
+    }
+    else {
+        cout << "\n" << user_number << " IS prime!\n" << endl;
+    }
 
     return 0;
 }
