@@ -25,18 +25,29 @@ int main() {
     cout << "Enter a number (integer): ";
     cin >> user_number;
 
+    // Starting at the user's number and counting down to 1,
+    // apply the modulus operator to find a remainder, if it exists.
+    //
+    // Example
+    //     500%500, 500%499, 500%498, ...
+    //
+    // When using the modulus operator (%), if the result is zero (0) then
+    // you have evenly divided the number (i.e. no remainder). This will
+    // indicate a factor of the number.
+    //
+    // If you only have 2 factors, then the number is prime.
+
     for (int i = user_number; 0 < i; i--) {
         if (user_number == 1) {
             factor_count++;
         }
         else if (user_number%i == 0) {
-            // i is a factor of user_number
             factor_count++;
         }
     }
     cout << "Your number " << user_number << " has "
          << factor_count << " factors.\n" << endl;
-         
+
     if (factor_count > 2) {
         cout << "\n" << user_number << " is NOT prime.\n" << endl;
     }
