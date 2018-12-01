@@ -1,0 +1,8 @@
+﻿Programming Assignment 10
+Check Leap Year or Not in C++
+To check whether the input year is a leap year or not a leap year in C++ Programming, you have to ask to the user to enter the year and start checking for the leap year. To check that the year is a leap year or not, following these rules:
+• If year is divided by 4 but not by 100, then it is a leap year.
+• If year is divided by both 100 and 400, then it is a leap year.
+• If year is divided by 400, then it is a leap year.
+• And in all other cases, it is not a leap year.
+
