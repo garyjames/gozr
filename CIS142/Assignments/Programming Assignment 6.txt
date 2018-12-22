@@ -1,8 +1,0 @@
-Programming Assignment 6
-
-Check Even or Odd in C++
-To check whether the input number is an even or an odd number in C++ programming, you have to ask to the user to enter a number.
-Now to check for even or odd, follow these rules:
-• The number is an even number, only if, it is divisible by 2
-• The number is an odd number, only if, it is not divisible by 2
-
