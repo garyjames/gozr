@@ -1,10 +1,4 @@
-
 *.pyc
-<<<<<<< HEAD
 *.swp
-*.old
-*.older
-*.oldest
-=======
-*.swp
->>>>>>> 80fd5b3708c98f4d9fa050ea24218bcab5527d5d
+*.old*
+__pycache__
