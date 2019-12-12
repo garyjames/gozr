@@ -30,8 +30,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--get-secdef-file', action='store_true',
                         help='Downloads secdef.dat.gz into current directory.')
-    parser.add_argument('--display-by-type', type=str, nargs='?', const='all',
-                        help='Display instruments by type')
+    parser.add_argument('--display-by-type', type=str, nargs='?', const='fut',
+                        help='Display instruments by type (defaults to "fut"')
 
     parser.add_argument('--secdef-sourcefile', default='secdef.dat.gz',
                         help='filename')
@@ -88,8 +88,8 @@ if __name__ == "__main__":
             instruments.append(regex(line))
 
     if args.display_by_type:
-        print('Display by type == dbt', args.display_by_type)
-        pass
+        ret = get_by_type(instruments, type_=args.display_by_type.upper())
+        print('done here')
 
     if args.foobar:
         print(foobar(line))
