@@ -4,14 +4,12 @@
 
 import gzip
 
-from collections import Counter
-
 import cme_exchange
 
 from fileparser import regex
 from fileparser import foobar
 
-from queries import get_all_instruments
+from queries import get_by_type
 
 
 menu = """Select item and press <ENTER>:
@@ -29,15 +27,16 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('-v', '--verbose', action='count', default=0)
+
     parser.add_argument('--get-secdef-file', action='store_true',
                         help='Downloads secdef.dat.gz into current directory.')
+    parser.add_argument('--display-by-type', type=str, nargs='?', const='all',
+                        help='Display instruments by type')
+
     parser.add_argument('--secdef-sourcefile', default='secdef.dat.gz',
                         help='filename')
     parser.add_argument('--regex', action='store_true',
                         help='Use fileparser.regex')
-    parser.add_argument('--regex2', action='store_true',
-                        help='Use fileparser.regex2')
     parser.add_argument('--foobar', action='store_true',
                         help='Use fileparser.foobar')
     parser.add_argument('--count-security-types', action='store_true',
@@ -84,10 +83,13 @@ if __name__ == "__main__":
 
     instruments = []
 
-    if args.regex:
-        with gzip.open(args.secdef_sourcefile, 'rt') as FH:
-            for line in FH:
-                instruments.append(regex(line))
+    with gzip.open(args.secdef_sourcefile, 'rt') as FH:
+        for line in FH:
+            instruments.append(regex(line))
+
+    if args.display_by_type:
+        print('Display by type == dbt', args.display_by_type)
+        pass
 
     if args.foobar:
         print(foobar(line))

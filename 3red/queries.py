@@ -3,7 +3,7 @@
 from collections import Counter
 
 
-def get_all_instruments(instruments, instrument_type=None):
+def get_by_type(instruments, type_=None):
     """Returns counter instance for all instruments equal to SecurityType(167).
 
     Ex: get_all_instruments(instrument_type='MLEG')
