@@ -1,14 +1,23 @@
 # coding: utf-8
 
 import gzip
-from fileparser import lineparser
+import timeit
 
-def test_one(line):
-    with gzip.open('secdef.dat.gz', 'rt') as FH:
-        for line in FH:
-            ret = lineparser(line)
+from fileparser import regex
+from fileparser import foobar
 
-if __name__ == '__main__':
-    import timeit
-    t = timeit.Timer("open('secdef.dat.gz', 'rt') as FH:\n    for line in FH:\n        lineparser(line)")
-    t.timeit()
+s = """\
+with gzip.open('secdef.dat.gz', 'rt') as FH:
+    for line in FH:
+        ret = regex(line)
+"""
+ret = timeit.timeit(stmt=s, number=1, globals=globals())
+print(ret)
+
+s = """\
+with gzip.open('secdef.dat.gz', 'rt') as FH:
+    for line in FH:
+        ret = foobar(line)
+"""
+ret = timeit.timeit(stmt=s, number=1, globals=globals())
+print(ret)
