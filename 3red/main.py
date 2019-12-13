@@ -1,8 +1,4 @@
 """CME Security Definition File tool
-
-Assesment for 3Red Partners position.
-
-Written by: Gary Galvez
 """
 
 
