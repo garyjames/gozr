@@ -9,6 +9,7 @@ regex_mleg_no = re.compile(r'\x01{}=([^\x01]+)\x01'.format(555))
 regex_leg_security_id = re.compile(r'\x01{}=([^\x01]+)+\x01'.format(602))
 regex_product_code = re.compile(r'\x01{}=([^\x01]+)\x01'.format(6937))
 
+
 def regex(line):
 
     security_id = regex_security_id.search(line).group(1)
@@ -38,21 +39,3 @@ def regex(line):
             mleg_no,
             leg_security_id,
             product_code)
-
-
-def foobar(line):
-
-    retr = []
-
-    for tag in ['48', '55']:
-        idx1 = line.find('\x01{}='.format(tag))
-        idx2 = line[idx1+4:].find('\x01')
-        val = line[idx1+4:idx1+4+idx2]
-        retr.append(val)
-    for tag in ['167', '462']:
-        idx1 = line.find('\x01{}='.format(tag))
-        idx2 = line[idx1+5:].find('\x01')
-        val = line[idx1+5:idx1+5+idx2]
-        retr.append(val)
-
-    return retr
