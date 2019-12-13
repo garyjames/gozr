@@ -20,6 +20,7 @@ class Secdef(object):
     """Run-time interface for the secdef tool. The default arguments in
     each method will answer each question from the assesment.
 
+
     Usage:
 
       secdef = Secdef()
@@ -30,15 +31,24 @@ class Secdef(object):
       2) futures_grouped_by_underlying = secdef.get_count_by_underlying()
       3) symbols = secdef.get_symbol()
 
-    You will be able to run methods with different TYPE values:
+
+    You can run methods with different TYPE values:
 
       oof = secdef.get_count_by_type(security_type='oof')
+      all_grouped = secdef.get_count_by_underlying(security_type='all')
+      symbols_10 = secdef.get_symbol(front_expiry_count=10)
+
 
     The default location of the secdef file is the current working
     directory. To use another *.gz file:
 
       secdef.secdef_sourcefile = '/my/other/secdef.dat.gz'
       secdef.load_instruments()
+
+
+    Use the pprint to display for groups:
+
+      secdef.pprint(futures_grouped_by_underlying)
 
     """
 
@@ -66,9 +76,10 @@ class Secdef(object):
         return self._count_by_underlying(self.instruments, type_=security_type)
 
     def get_symbol(self, security_type='fut', front_expiry_count=4, asset='ge',
-                   leg_no=None):
+                   leg_no=0):
         return self._get_symbol(self.instruments, type_=security_type,
-                               front_expiry_count=4, asset='ge', leg_no=0) 
+                               front_expiry_count=front_expiry_count,
+                               asset=asset, leg_no=leg_no) 
 
     @staticmethod
     def pprint(d):

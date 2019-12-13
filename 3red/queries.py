@@ -41,8 +41,8 @@ def count_by_underlying(instruments, type_=None):
         return None
 
 
-def get_symbol(instruments, type_='fut', front_expiry_count=4,
-               asset='ge', leg_no=0):
+def get_symbol(instruments, type_=None, front_expiry_count=None,
+               asset=None, leg_no=None):
     """Returns list of tuples matching arguments"""
 
     if leg_no in [None, 0]:
