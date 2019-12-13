@@ -1,15 +1,10 @@
-# coding: utf-8
-
 from collections import Counter
 
 
 def count_by_type(instruments, type_=None):
-    """SecurityID(48) grouped by SecurityType(167)
-
-    Returns counter with tally of TYPE found in SecurityType(167).
-    If TYPE is 'all', returns count of every instrument grouped by TYPE.
-
-    Example:    count_by_type(instrument_type='mleg') -> {'MLEG': n}
+    """Returns counter with tally of unique security ids
+    (SecurityID 48) having TYPE=SecurityType(167). If TYPE is 'all',
+    returns count for each security id grouped by TYPE.
     """
 
     type_ = type_.upper()
@@ -24,15 +19,11 @@ def count_by_type(instruments, type_=None):
 
 
 def count_by_underlying(instruments, type_=None):
-    """SecurityID(48) grouped by UnderlyingProduct(462) (i.e. Product Complex)
-
-    Returns counter with tally grouped by UnderlyingProduct(462).
+    """Returns counter with tally of grouped by UnderlyingProduct(462).
     If TYPE is 'all', returns dict of SecurityType(167).
 
-    Example:
-
-      count_by_underlying(type_='all') -> { 'FUT': { 'Energy': n, ... },
-                                            'OOF': { 'Energy': n, ... }, ... }
+    count_by_underlying(type_='all') -> { 'FUT': { 'Energy': n, ... }, ... }
+    SecurityID(48) grouped by UnderlyingProduct(462) (i.e. Product Complex)
     """
 
     type_ = type_.upper()
@@ -50,8 +41,8 @@ def count_by_underlying(instruments, type_=None):
         return None
 
 
-def get_symbol(instruments, type_='fut',
-               front_expiry_count=4, asset='ge', leg_no=None):
+def get_symbol(instruments, type_='fut', front_expiry_count=4,
+               asset='ge', leg_no=0):
     """Returns list of tuples matching arguments"""
 
     if leg_no in [None, 0]:
@@ -64,9 +55,9 @@ def get_symbol(instruments, type_='fut',
             asset == i[7] and
             leg_no == i[5]]
 
-    ret.sort(key=lambda tup: tup[1])
 
     if front_expiry_count:
-        return ret[:4]
+        ret.sort(key=lambda tup: tup[1])
+        return ret[:front_expiry_count]
     else:
         return ret
