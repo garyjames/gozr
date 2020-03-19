@@ -213,9 +213,10 @@ class BinBuilder(object):
         self.odds = Odds()
 
     def build_wheel(self, wheel):
-        for oc_name in ['straight', 'split', 'street', 'corner', 'line',
-                        'dozen', 'column', 'high', 'low', 'even', 'odd', 'red',
-                        'black', 'basket']:
+        """Fill each bin in wheel with the collection of possible
+        outcomes for each number.
+        """
+        for oc_name in Outcome.outcomes:
             outcomes = self.__getattribute__(oc_name)
             logger.debug(f"Building Wheel for {outcomes.__name__}")
             for bin_number, outcome in outcomes():
@@ -336,7 +337,7 @@ class BinBuilder(object):
 
 
 class Bet:
-    """Bet associates an amount and an Outcome. In a future round of
+    """Bet associates an amount with an Outcome. In a future round of
     design, we can also associate a Bet with a Player.
     """
 
@@ -345,7 +346,7 @@ class Bet:
         self.outcome = outcome
 
     def __str__(self):
-        return f"{self.amount} on {self.outcome.name}"
+        return f"{self.amount} on {self.outcome}"
 
     def __repr__(self):
         return (f"{self.__class__.__name__}(amount={self.amount}, "
