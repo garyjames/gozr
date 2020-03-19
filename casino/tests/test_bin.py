@@ -1,6 +1,6 @@
 import unittest
-from casino.roulette.outcome import Outcome
-from casino.roulette.bin import Bin
+from src.roulette import Outcome
+from src.roulette import Bin
 
 
 class TestBin(unittest.TestCase):

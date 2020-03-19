@@ -39,6 +39,10 @@ class Outcome(object):
     payout amount.
     """
 
+    outcomes = ('straight', 'split', 'street', 'corner', 'line', 'dozen',
+                'column', 'high', 'low', 'even', 'odd', 'red', 'black',
+                'basket')
+
     def __init__(self, name, odds):
         self.name = name
         self.odds = odds

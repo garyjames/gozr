@@ -1,6 +1,6 @@
 import unittest
-from roulette.outcome import Outcome
-from roulette.game import Odds
+from src.roulette import Outcome
+from src.roulette import Odds
 
 
 class TestOutcome(unittest.TestCase):
