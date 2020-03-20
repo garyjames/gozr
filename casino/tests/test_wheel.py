@@ -64,7 +64,7 @@ def test_add_outcome(wheel):
 def test_get_outcome(wheel):
     binbuilder = BinBuilder()
     binbuilder.build_wheel(wheel)
-    assert Outcome('Straight 16', 35) in wheel.get_outcome('Straight 16')
+    assert Outcome('Straight 16', 35) == wheel.get_outcome('Straight 16')
     with pytest.raises(ValueError):
         wheel.get_outcome('Straight')
         wheel.get_outcome('Foo')

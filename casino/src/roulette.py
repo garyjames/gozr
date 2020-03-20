@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from random import Random
 from os import urandom
 import logging
@@ -104,12 +106,10 @@ class Wheel(object):
         return self.bins[n]
 
     def get_outcome(self, name):
-        ret = [oc for oc in self.all_outcomes
-               if name.lower() == oc.name.lower()]
-        if ret:
-            return ret
-        else:
-            raise ValueError(f"{name} outcome NOT FOUND")
+        for oc in self.all_outcomes:
+            if name.lower() == oc.name.lower():
+                return oc
+        raise ValueError(f"{name} outcome NOT FOUND")
 
     def add_outcome(self, n, outcome):
         """Add outcome to Bin at index n.
@@ -222,7 +222,7 @@ class BinBuilder(object):
             for bin_number, outcome in outcomes():
                 wheel.add_outcome(bin_number, outcome)
 
-    def straight(self):
+    def straight(self) -> None:
         """For all numbers n such that 0 <= n < 37,
         double-zero at index 37 makes for 38 outcomes.
         """
@@ -232,7 +232,7 @@ class BinBuilder(object):
             oc = Outcome(oc_name, self.odds.straight)
             yield (bin_number, oc)
 
-    def split(self):
+    def split(self) -> None:
         for column in range(1, 35, 3), range(2, 36, 3):
             for number in column:
                 oc_name = "{} {}-{}".format("Split", number, number + 1)
@@ -341,9 +341,10 @@ class Bet:
     design, we can also associate a Bet with a Player.
     """
 
-    def __init__(self, amount: int, outcome: Outcome):
+    def __init__(self, amount: int, outcome: Outcome, player=None) -> None:
         self.amount = amount
         self.outcome = outcome
+        self.player = player
 
     def __str__(self):
         return f"{self.amount} on {self.outcome}"
