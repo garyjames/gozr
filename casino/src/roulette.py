@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from random import Random
+from uuid import uuid4
 from os import urandom
+from collections import defaultdict
 import logging
 import sys
 
 LOGLEVEL = logging.DEBUG
-
 logger = logging.getLogger(__name__)
 logger.setLevel(LOGLEVEL)
 handler = logging.StreamHandler(sys.stdout)
@@ -36,7 +37,7 @@ class Bin(frozenset):
     pass
 
 
-class Outcome(object):
+class Outcome:
     """Name for bet, contains payout odds and calculates
     payout amount.
     """
@@ -69,7 +70,7 @@ class Outcome(object):
         return self.odds * n
 
 
-class Wheel(object):
+class Wheel:
     """Wheel contains the 38 individual bins on a wheel, plus
     a random number generator. It can select a Bin at random,
     simulating a spin of the wheel.
@@ -132,7 +133,7 @@ class Wheel(object):
         return self.bins[self.number]
 
 
-class Odds(object):
+class Odds:
     def __init__(self):
         self._straight = 35
         self._split = 17
@@ -206,7 +207,7 @@ class Odds(object):
         return self._low
 
 
-class BinBuilder(object):
+class BinBuilder:
     """Binbuilder"""
 
     def __init__(self):
@@ -336,15 +337,28 @@ class BinBuilder(object):
             yield number, outcome
 
 
+class Player:
+    def __init__(self, name='Player 1', balance=100):
+        self.uuid = uuid4()
+        self.name = name
+        self.balance = balance
+    def place_bet(self, table, bet):
+        bet_ = table.create_bet
+        if bet_:
+            bets.append(bet_)
+            return bet_
+        else:
+            return None
+
+
 class Bet:
-    """Bet associates an amount with an Outcome. In a future round of
-    design, we can also associate a Bet with a Player.
+    """Bet associates an amount with an Outcome, to a Player. In a
+    future round of design, we can also associate a Bet with a Player.
     """
 
-    def __init__(self, amount: int, outcome: Outcome, player=None) -> None:
+    def __init__(self, amount: int, outcome: Outcome) -> None:
         self.amount = amount
         self.outcome = outcome
-        self.player = player
 
     def __str__(self):
         return f"{self.amount} on {self.outcome}"
@@ -360,6 +374,24 @@ class Bet:
         return self.amount
 
 
+class Table:
+    """Roulette Table"""
+
+    def __init__(self, wheel: Wheel):
+        self.wheel = wheel
+        self.bets = defaultdict(list)
+
+    def _assert_bet(self, bet) -> bool:
+        if bet.outcome in wheel.all_outcomes:
+            return True
+        return False
+
+    def create_bet(self, player: Player, bet: Bet) -> Bet:
+        if self._assert_bet(bet):
+            return bet
+        return None
+
+
 if __name__ == "__main__":
-    wheel = Wheel(1)
+    wheel = Wheel()
     BinBuilder().build_wheel(wheel)

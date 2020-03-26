@@ -1,8 +1,8 @@
 # coding: utf-8
-from src.roulette import BinBuilder, Wheel, Bet, Outcome
+from src.roulette import BinBuilder, Wheel, Bet, Outcome, Table
 
 builder = BinBuilder()
-wheel = Wheel(random_seed=1)
+wheel = Wheel()
 builder.build_wheel(wheel)
 
 for bin_num in range(38):
@@ -12,5 +12,6 @@ for bin_num in range(38):
     print()
 
 str16 = Outcome('Straight 16', 35)
-bet = Bet(25, wheel.get_outcome('Straight 16'))
-print(bet)
+bet = Bet(25, wheel.get_outcome('Straight 16'), player='foo')
+assert bet.outcome == str16
+table = Table(wheel)
