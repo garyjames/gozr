@@ -70,17 +70,15 @@ class Outcome:
 
 
 class Wheel:
-    """Wheel contains the 38 individual bins on a wheel, plus
+    """Wheel contains the 38 individual bin instances on a wheel, plus
     a random number generator. It can select a Bin at random,
     simulating a spin of the wheel.
 
+        Contains the individual Bin instances as a 38 element tuple.
     A frozenset -- in the long run -- does make sense. After the wheel's
     insanely complex collections are built, they don't change. However,
     it adds a complication to have collection which are cloned and
     frozen.
-
-    Wheel.bins
-        Contains the individual Bin instances as a 38 element tuple.
 
      Wheel.rng
         A random number generator to select a Bin from the bins collection.
@@ -105,13 +103,13 @@ class Wheel:
         """
         return self.bins[n]
 
-    def get_outcome(self, name):
+    def get_outcome(self, name) -> Outcome:
         for oc in self.all_outcomes:
             if name.lower() == oc.name.lower():
                 return oc
         raise ValueError(f"{name} outcome NOT FOUND")
 
-    def add_outcome(self, n, outcome):
+    def add_outcome(self, n, outcome) -> None:
         """Add outcome to Bin at index n.
 
         Bin is a frozenset, so we need to re-create the Bin for the
@@ -123,7 +121,7 @@ class Wheel:
         self.bins = tuple(b if i != n else self.bins[n] | Bin([outcome])
                           for i, b in enumerate(self.bins))
 
-    def choose(self):
+    def choose(self) -> Bin:
         """Generates a random number between 0 and 37, caches the
         number and returns the randomly selected Bin instance.
         """
@@ -342,9 +340,8 @@ class Player:
         self.name = name
         self.balance = balance
     def place_bet(self, table, bet):
-        bet_ = table.create_bet
+        bet_ = table.create_bet(bet)
         if bet_:
-            bets.append(bet_)
             return bet_
         else:
             return None
