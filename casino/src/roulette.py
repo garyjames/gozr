@@ -335,16 +335,11 @@ class BinBuilder:
 
 
 class Player:
-    def __init__(self, name='Player 1', balance=100):
+    def __init__(self, name=None):
         self.uuid = uuid4()
-        self.name = name
-        self.balance = balance
-    def place_bet(self, table, bet):
-        bet_ = table.create_bet(bet)
-        if bet_:
-            return bet_
-        else:
-            return None
+        self.name = name if name else f'Player {self.uuid[:5]}'
+    def place_bet(self, bet):
+        pass
 
 
 class Bet:
@@ -370,6 +365,10 @@ class Bet:
         return self.amount
 
 
+class InvalidBet(Exception):
+    pass
+
+
 class Table:
     """Roulette Table"""
 
@@ -377,10 +376,11 @@ class Table:
         self.wheel = wheel
         self.bets = defaultdict(list)
 
-    def _assert_bet(self, bet) -> bool:
+    def is_valid(self, bet) -> None:
         if bet.outcome in wheel.all_outcomes:
-            return True
-        return False
+            pass
+        else:
+            raise InvalidBet
 
     def create_bet(self, player: Player, bet: Bet) -> Bet:
         if self._assert_bet(bet):
