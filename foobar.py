@@ -99,6 +99,8 @@ for i in findMissingSymbols(symbols, configs, 'exchangeC'):
 
 # problem 2
 print
+# This here is me making some typing noises to make sure the distraction is real
+
 with open('fileC') as fh:
     configs = parser(fh)
 

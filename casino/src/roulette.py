@@ -7,6 +7,9 @@ from collections import defaultdict
 import logging
 import sys
 
+
+TABLE_LIMIT = 300
+TABLE_MIN = 3
 LOGLEVEL = logging.DEBUG
 logger = logging.getLogger(__name__)
 logger.setLevel(LOGLEVEL)
@@ -372,20 +375,45 @@ class InvalidBet(Exception):
 class Table:
     """Roulette Table"""
 
-    def __init__(self, wheel: Wheel):
+    def __init__(self, wheel: Wheel, limit=500, minimum=5):
         self.wheel = wheel
         self.bets = defaultdict(list)
+        self.limit = limit
+        self.min = minimum
+        self.winning_oc = None
 
-    def is_valid(self, bet) -> None:
-        if bet.outcome in wheel.all_outcomes:
+    def __iter__(self):
+        yield from self.bets
+
+    def _is_valid(self, bet) -> None:
+        if bet.outcome in self.wheel.all_outcomes:
             pass
         else:
             raise InvalidBet
 
-    def create_bet(self, player: Player, bet: Bet) -> Bet:
-        if self._assert_bet(bet):
-            return bet
-        return None
+    def _within_limits(self, bet) -> bool:
+        if bet.amount <= self.limit and \
+           bet.amount >= table.min and \
+           sum([b.amount for b in bets if bet.player == b.player]) <= self.limit:
+            return True
+        else:
+            return False
+
+    def accept_bet(self, bet: Bet) -> Bet:
+        if self._is_valid(bet) and self._within_limits(bet):
+            self.bets[bet.player].append(bet)
+        else:
+            raise InvalidBet
+
+    def get_wins_and_losses(self):
+        for bet in self.bets:
+            if bet.outcome in self.winning_oc:
+                self.winners.append(bet)
+            else:
+                self.losers.append(bet)
+
+    def get_outcome(self, number=None):
+        self.winning_oc = self.wheel.choose()
 
 
 if __name__ == "__main__":
