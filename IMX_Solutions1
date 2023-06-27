@@ -1,0 +1,88 @@
+#1
+=============================================================
+With the supposition that ICD_Code = 123 refers to Diabetes related claims and Date values are formatted as YYYYMMDD.
+
+select t2.date, avg(t2.cost_claim) as Avg_Daily_Cost
+from table1 t1, table2 t2
+where t1.claim_number = t2.claim_number and
+  t1.icd_code = 123 and
+  t2.date >= 20190228 and t2.date <= 20200331
+group by t2.date
+
+
+#2
+=============================================================
+Need clarification to proceed.
+
+The instructions say to get the "volume of pharmacy claims" which implies the
+number of drugs asked per patient. Does that mean that there is a 1:1
+relationship between a client claim and a drug_code? In other words, can a
+claim_number have only one pharmacy claim (i.e. drug_code)? If so, then I can
+safely assume each claim_number will have only one drug claim (drug_code).
+
+But, if a claim_number can have multiple drug_codes (the doctor prescribes more
+than one drug per claim), then there is no way to tie a claim to multiple
+drug_code(s). thanks.
+
+
+#3
+=============================================================
+# Assuming messages are for the entire session and time series
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the FIX messages into a DataFrame
+fix_data = pd.read_csv('fix_messages.csv')
+
+# Create a Series for each MsgType(35) and OrderQty(38) entry
+message_types = fix_data['35']
+order_quantities = fix_data['38']
+
+# Create a Series containing a count of distinctive message types
+message_counts = message_types.values_counts()
+
+# Create a Bar-Style graph showing number of distinctive message types
+plt.figure(figsizse=(10,6))
+plt.bar(message_counts.index, message_counts.values)
+plt.xlabel('MsgTypes - Orders, Fills, Cxls, etc.')
+plt.ylabel('Count')
+plt.title('Number of each Message Type')
+...
+
+# Create a Scatter-Style graph showing FIX session's order quantities
+# throughout the day (i.e. session)
+plt.figure(figsizse=(10,6))
+plt.scatter(range(len(order_quantities)), order_quantities)
+plt.xlabel('Sequential Messages')
+plt.ylabel('Order Qty')
+plt.title('Order Quantity by Subsequent Message')
+...
+
+
+#4
+=============================================================
+d) Assessing the correlation between news events and stock price changes
+
+
+#5
+=============================================================
+IP whitelisting will only allow access to applications/hosts where the source
+IP is known to that app/host. If the app/host doesn't recognize the IP, it will
+deny connection. However, spoofing an addresses might bypass this security
+measure.
+
+When hosts are on a VPN, then only other hosts on the same VPN can access them.
+
+When combining these two methods, then only certain IPs within that VPN will
+have access to other apps/hosts/assests on that same VPN. Restricting IPs for
+whitelisting from ONLY the VPN IP pool is one approach to combining these two
+methods.
+
+It comes down to "layers" of security to mitigate the probability of
+attacks/break-ins, since there really isn't one solution to fit all.
+
+
+#6
+=============================================================
+a) Establishing a buffer zone between the internet and internal network to enhance security

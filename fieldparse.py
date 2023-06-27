@@ -1,12 +1,13 @@
 # fieldparse.py
 
+from collections import namedtuple
+
+
 def parse(lines, types, names=None, sep=None):
     '''
     Parse a line of column oriented data into a list of dictionaries
     or tuples with type conversion.
     '''
-
-    from collections import namedtuple
 
     if names:
         records = namedtuple('records', names)
